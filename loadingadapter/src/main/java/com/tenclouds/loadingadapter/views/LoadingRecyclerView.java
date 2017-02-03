@@ -6,6 +6,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 
+import com.tenclouds.loadingadapter.AbstractLoadingAdapter;
 import com.tenclouds.loadingadapter.EndlessRecyclerViewScrollListener;
 
 public class LoadingRecyclerView extends RecyclerView {
@@ -38,7 +39,16 @@ public class LoadingRecyclerView extends RecyclerView {
                 }
             });
         } else {
-            throw new IllegalStateException("LayoutManager is not instance of LinearLayoutManager. LoadingRecyclerView's only supports LinearLayoutManager.");
+            throw new IllegalStateException("LayoutManager is not instance of LinearLayoutManager. LoadingRecyclerView only supports LinearLayoutManager.");
+        }
+    }
+
+    @Override
+    public void setAdapter(Adapter adapter) {
+        if(adapter instanceof AbstractLoadingAdapter) {
+            super.setAdapter(adapter);
+        } else {
+            throw new IllegalStateException("Adapter ");
         }
     }
 }

@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public abstract class AbstractLoadingAdapter<T> extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
@@ -97,6 +98,12 @@ public abstract class AbstractLoadingAdapter<T> extends RecyclerView.Adapter<Rec
         } else {
             return getYourItemViewType(position);
         }
+    }
+
+    public void add(List<T> newItems) {
+        int oldItemsSize = items.size();
+        items.addAll(newItems);
+        notifyItemRangeChanged(oldItemsSize, oldItemsSize + newItems.size());
     }
 
     public void showLoading(boolean status) {
