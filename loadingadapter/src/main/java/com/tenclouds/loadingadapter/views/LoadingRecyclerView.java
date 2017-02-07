@@ -6,8 +6,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 
-import com.tenclouds.loadingadapter.EndlessRecyclerViewScrollListener;
-
 public class LoadingRecyclerView extends RecyclerView {
     public LoadingRecyclerView(Context context) {
         super(context);
@@ -33,15 +31,18 @@ public class LoadingRecyclerView extends RecyclerView {
 
     private void setScrollListener(final AbstractLoadingAdapter adapter) {
         if(getLayoutManager() instanceof LinearLayoutManager) {
-            addOnScrollListener(new EndlessRecyclerViewScrollListener((LinearLayoutManager) getLayoutManager()) {
+            addOnScrollListener(new OnScrollListener() {
                 @Override
-                public void onLoadMore(int page, int totalItemsCount) {
-                    adapter.loadNewItems();
-                }
+                public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                    LinearLayoutManager linearLayoutManager = (LinearLayoutManager) getLayoutManager();
+                    int firstVisibleItem = linearLayoutManager.findFirstVisibleItemPosition();
+                    int visibleItemCount = LoadingRecyclerView.this.getChildCount();
+                    int totalItemCount = linearLayoutManager.getItemCount();
+                    boolean loading = adapter.isLoading();
 
-                @Override
-                public void onScrolled(int dx, int dy) {
-
+                    if (!loading && (totalItemCount - visibleItemCount) <= (firstVisibleItem + 5)) {
+                        adapter.loadNewItems();
+                    }
                 }
             });
         } else {

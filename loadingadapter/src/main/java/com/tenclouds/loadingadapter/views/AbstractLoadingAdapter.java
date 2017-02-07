@@ -20,7 +20,7 @@ public abstract class AbstractLoadingAdapter<T> extends RecyclerView.Adapter<Rec
 
     private static final int VIEWTYPE_LOADER = -1;
     private static final int VIEWTYPE_EMPTY_VIEW = -2;
-    private boolean showLoader;
+    private boolean isLoading;
     private ArrayList<T> items;
     private LayoutInflater inflater;
     private AbstractItemsLoader<T> itemsLoader;
@@ -40,6 +40,8 @@ public abstract class AbstractLoadingAdapter<T> extends RecyclerView.Adapter<Rec
     public void setItemsLoader(AbstractItemsLoader<T> itemsLoader){
         items.clear();
         this.itemsLoader = itemsLoader;
+        notifyDataSetChanged();
+        loadNewItems();
     }
 
     @Override
@@ -68,7 +70,7 @@ public abstract class AbstractLoadingAdapter<T> extends RecyclerView.Adapter<Rec
             return 1;
         }
 
-        if (showLoader) {
+        if (isLoading) {
             return items.size() + 1;
         } else {
             return items.size();
@@ -88,7 +90,7 @@ public abstract class AbstractLoadingAdapter<T> extends RecyclerView.Adapter<Rec
 
     @Override
     public int getItemViewType(int position) {
-        if (showLoader && (items.isEmpty() || position == getItemCount() - 1)) {
+        if (isLoading && (items.isEmpty() || position == getItemCount() - 1)) {
             return VIEWTYPE_LOADER;
         } else if (items.size() == 0) {
             return VIEWTYPE_EMPTY_VIEW;
@@ -99,19 +101,13 @@ public abstract class AbstractLoadingAdapter<T> extends RecyclerView.Adapter<Rec
 
     void loadNewItems() {
         if(autoLoadingEnabled) {
-            showLoading(true);
-            AsyncTask.execute(new Runnable() {
-                @Override
-                public void run() {
-                    final List<T> newItems = itemsLoader.getNewItems();
-                    ((Activity) context).runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            add(newItems);
-                            showLoading(false);
-                        }
-                    });
-                }
+            setLoading(true);
+            AsyncTask.execute(() -> {
+                final List<T> newItems = itemsLoader.getNewItems();
+                ((Activity) context).runOnUiThread(() -> {
+                    add(newItems);
+                    setLoading(false);
+                });
             });
         }
     }
@@ -124,9 +120,13 @@ public abstract class AbstractLoadingAdapter<T> extends RecyclerView.Adapter<Rec
         }
     }
 
-    public void showLoading(boolean status) {
-        showLoader = status;
+    public void setLoading(boolean status) {
+        isLoading = status;
         notifyDataSetChanged();
+    }
+
+    public boolean isLoading() {
+        return isLoading;
     }
 
     public T getItem(int position) {

@@ -43,12 +43,12 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
     @Override
     public boolean onQueryTextSubmit(String query) {
+        adapter.setItemsLoader(new SearchCardsLoader(query));
         return false;
     }
 
     @Override
     public boolean onQueryTextChange(String newText) {
-        adapter.setItemsLoader(new SearchCardsLoader(newText));
         return false;
     }
 }
