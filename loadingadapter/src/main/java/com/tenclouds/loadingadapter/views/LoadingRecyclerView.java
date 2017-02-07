@@ -41,7 +41,7 @@ public class LoadingRecyclerView extends RecyclerView {
                     boolean loading = adapter.isLoading();
 
                     if (!loading && (totalItemCount - visibleItemCount) <= (firstVisibleItem + 5)) {
-                        adapter.loadNewItems();
+                        post(adapter::loadNewItems);
                     }
                 }
             });
