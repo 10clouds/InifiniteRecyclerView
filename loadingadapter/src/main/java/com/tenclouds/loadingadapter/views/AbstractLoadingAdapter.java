@@ -37,7 +37,7 @@ public abstract class AbstractLoadingAdapter<T> extends RecyclerView.Adapter<Rec
         items = new ArrayList<>();
     }
 
-    public void setItemsLoader(AbstractItemsLoader<T> itemsLoader){
+    public void setItemsLoader(AbstractItemsLoader<T> itemsLoader) {
         items.clear();
         this.itemsLoader = itemsLoader;
         notifyDataSetChanged();
@@ -100,13 +100,13 @@ public abstract class AbstractLoadingAdapter<T> extends RecyclerView.Adapter<Rec
     }
 
     void loadNewItems() {
-        if(autoLoadingEnabled) {
+        if (autoLoadingEnabled) {
             setLoading(true);
             AsyncTask.execute(() -> {
                 final List<T> newItems = itemsLoader.getNewItems();
                 ((Activity) context).runOnUiThread(() -> {
-                    add(newItems);
                     setLoading(false);
+                    add(newItems);
                 });
             });
         }
@@ -116,13 +116,15 @@ public abstract class AbstractLoadingAdapter<T> extends RecyclerView.Adapter<Rec
         if (newItems != null && newItems.size() > 0) {
             int oldItemsSize = items.size();
             items.addAll(newItems);
-            notifyItemRangeChanged(oldItemsSize, oldItemsSize + newItems.size());
+            notifyItemRangeInserted(oldItemsSize, newItems.size());
         }
     }
 
     public void setLoading(boolean status) {
-        isLoading = status;
-        notifyDataSetChanged();
+        if (status != this.isLoading) {
+            isLoading = status;
+            notifyItemChanged(items.size());
+        }
     }
 
     public boolean isLoading() {
