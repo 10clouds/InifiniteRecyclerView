@@ -107,7 +107,8 @@ public abstract class AbstractLoadingAdapter<T> extends RecyclerView.Adapter<Rec
                     final List<T> newItems = itemsLoader.getNewItems();
                     ((Activity) context).runOnUiThread(() -> {
                         setLoading(false);
-                        add(newItems);
+                        if(newItems != null)
+                            add(newItems);
                     });
                 } catch (Exception e) {
                     e.printStackTrace();

@@ -13,9 +13,11 @@ public class SearchCardsLoader implements AbstractItemsLoader<Card> {
     private static final int PAGE_SIZE = 20;
     private int pageNo = 1;
     private final String searchQuery;
+    private ShowErrorInterface showErrorInterface;
 
-    public SearchCardsLoader(@Nullable String searchQuery) {
+    public SearchCardsLoader(@Nullable String searchQuery, ShowErrorInterface showErrorInterface) {
         this.searchQuery = searchQuery;
+        this.showErrorInterface = showErrorInterface;
     }
 
     @Override
@@ -28,9 +30,19 @@ public class SearchCardsLoader implements AbstractItemsLoader<Card> {
             filter.add("name=" + searchQuery);
         }
 
-        List<Card> cardsPage = CardAPI.getAllCards(filter);
-        ++pageNo;
-        return cardsPage;
+        try {
+            List<Card> cardsPage = CardAPI.getAllCards(filter);
+            ++pageNo;
+            return cardsPage;
+        } catch (Exception e){
+            e.printStackTrace();
+            showErrorInterface.showError(e.getLocalizedMessage());
+            return null;
+        }
+    }
+
+    public interface ShowErrorInterface {
+        void showError(String errorText);
     }
 
 }

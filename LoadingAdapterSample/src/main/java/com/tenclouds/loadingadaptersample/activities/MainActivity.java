@@ -9,6 +9,7 @@ import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.tenclouds.loadingadapter.views.LoadingRecyclerView;
 import com.tenclouds.loadingadaptersample.MtgCardsLoadingAdapter;
@@ -17,7 +18,7 @@ import com.tenclouds.loadingadaptersample.SearchCardsLoader;
 
 import io.magicthegathering.javasdk.resource.Card;
 
-public class MainActivity extends AppCompatActivity implements SearchView.OnQueryTextListener, MenuItemCompat.OnActionExpandListener, MtgCardsLoadingAdapter.ItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements SearchView.OnQueryTextListener, MenuItemCompat.OnActionExpandListener, MtgCardsLoadingAdapter.ItemSelectedListener, SearchCardsLoader.ShowErrorInterface {
     private MtgCardsLoadingAdapter adapter;
 
     @Override
@@ -25,7 +26,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         LoadingRecyclerView recyclerView = (LoadingRecyclerView) findViewById(R.id.recycler);
-        adapter = new MtgCardsLoadingAdapter(this, new SearchCardsLoader(null), this);
+        adapter = new MtgCardsLoadingAdapter(this, new SearchCardsLoader(null, this), this);
         recyclerView.setAdapter(adapter);
     }
 
@@ -50,7 +51,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
     @Override
     public boolean onQueryTextSubmit(String query) {
-        adapter.setItemsLoader(new SearchCardsLoader(query));
+        adapter.setItemsLoader(new SearchCardsLoader(query, this));
         return false;
     }
 
@@ -67,7 +68,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
     @Override
     public boolean onMenuItemActionCollapse(MenuItem item) {
-        adapter.setItemsLoader(new SearchCardsLoader(""));
+        adapter.setItemsLoader(new SearchCardsLoader("", this));
         return true;
     }
 
@@ -75,4 +76,10 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     public void onItemSelected(Card card) {
         CardDetailActivity.start(this, card);
     }
+
+    @Override
+    public void showError(String errorText) {
+        runOnUiThread(() -> Toast.makeText(this, errorText, Toast.LENGTH_LONG).show());
+    }
+
 }
