@@ -1,4 +1,4 @@
-package com.tenclouds.loadingadaptersample;
+package com.tenclouds.loadingadaptersample.activities;
 
 import android.app.SearchManager;
 import android.content.Context;
@@ -11,8 +11,14 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.tenclouds.loadingadapter.views.LoadingRecyclerView;
+import com.tenclouds.loadingadaptersample.AllCardsLoader;
+import com.tenclouds.loadingadaptersample.MtgCardsLoadingAdapter;
+import com.tenclouds.loadingadaptersample.R;
+import com.tenclouds.loadingadaptersample.SearchCardsLoader;
 
-public class MainActivity extends AppCompatActivity implements SearchView.OnQueryTextListener, MenuItemCompat.OnActionExpandListener {
+import io.magicthegathering.javasdk.resource.Card;
+
+public class MainActivity extends AppCompatActivity implements SearchView.OnQueryTextListener, MenuItemCompat.OnActionExpandListener, MtgCardsLoadingAdapter.ItemSelectedListener {
     private MtgCardsLoadingAdapter adapter;
 
     @Override
@@ -20,7 +26,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         LoadingRecyclerView recyclerView = (LoadingRecyclerView) findViewById(R.id.recycler);
-        adapter = new MtgCardsLoadingAdapter(this, new AllCardsLoader());
+        adapter = new MtgCardsLoadingAdapter(this, new AllCardsLoader(), this);
         recyclerView.setAdapter(adapter);
     }
 
@@ -64,5 +70,10 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     public boolean onMenuItemActionCollapse(MenuItem item) {
         adapter.setItemsLoader(new AllCardsLoader());
         return true;
+    }
+
+    @Override
+    public void onItemSelected(Card card) {
+        CardDetailActivity.start(this, card);
     }
 }

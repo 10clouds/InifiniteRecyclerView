@@ -3,6 +3,7 @@ package com.tenclouds.loadingadaptersample;
 import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.view.ViewGroup;
 
 import com.tenclouds.loadingadapter.AbstractItemsLoader;
@@ -13,9 +14,11 @@ import io.magicthegathering.javasdk.resource.Card;
 
 
 public class MtgCardsLoadingAdapter extends AbstractLoadingAdapter<Card> {
+    private ItemSelectedListener itemSelectedListener;
 
-    public MtgCardsLoadingAdapter(Context context, AbstractItemsLoader<Card> itemsLoader) {
+    public MtgCardsLoadingAdapter(Context context, AbstractItemsLoader<Card> itemsLoader, ItemSelectedListener itemSelectedListener) {
         super(context, R.layout.view_empty, itemsLoader);
+        this.itemSelectedListener = itemSelectedListener;
     }
 
     @Override
@@ -31,8 +34,12 @@ public class MtgCardsLoadingAdapter extends AbstractLoadingAdapter<Card> {
 
     @Override
     public void bindYourViewHolder(RecyclerView.ViewHolder holder, int position) {
-        Card item = getItem(position);
-        ((CardViewHolder)holder).setCard(item);
+        final Card item = getItem(position);
+        CardViewHolder cardViewHolder = (CardViewHolder) holder;
+        cardViewHolder.setCard(item);
+        if (itemSelectedListener != null) {
+            cardViewHolder.binding.getRoot().setOnClickListener((View view) -> itemSelectedListener.onItemSelected(item));
+        }
     }
 
     @Override
@@ -48,8 +55,12 @@ public class MtgCardsLoadingAdapter extends AbstractLoadingAdapter<Card> {
             this.binding = binding;
         }
 
-        public void setCard(Card card){
+        public void setCard(Card card) {
             binding.setCard(card);
         }
+    }
+
+    public interface ItemSelectedListener {
+        void onItemSelected(Card card);
     }
 }

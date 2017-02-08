@@ -1,1 +1,1 @@
-include ':app', ':loadingadapter'
+include ':LoadingAdapterSample', ':loadingadapter'

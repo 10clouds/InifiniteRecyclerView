@@ -103,11 +103,18 @@ public abstract class AbstractLoadingAdapter<T> extends RecyclerView.Adapter<Rec
         if (autoLoadingEnabled) {
             setLoading(true);
             AsyncTask.execute(() -> {
-                final List<T> newItems = itemsLoader.getNewItems();
-                ((Activity) context).runOnUiThread(() -> {
-                    setLoading(false);
-                    add(newItems);
-                });
+                try {
+                    final List<T> newItems = itemsLoader.getNewItems();
+                    ((Activity) context).runOnUiThread(() -> {
+                        setLoading(false);
+                        add(newItems);
+                    });
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    ((Activity) context).runOnUiThread(() -> {
+                        setLoading(false);
+                    });
+                }
             });
         }
     }

@@ -3,7 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/LoadingAdapter.iml" filepath="$PROJECT_DIR$/LoadingAdapter.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/LoadingAdapterSample/LoadingAdapterSample.iml" filepath="$PROJECT_DIR$/LoadingAdapterSample/LoadingAdapterSample.iml" />
       <module fileurl="file://$PROJECT_DIR$/loadingadapter/loadingadapter.iml" filepath="$PROJECT_DIR$/loadingadapter/loadingadapter.iml" />
     </modules>
   </component>
