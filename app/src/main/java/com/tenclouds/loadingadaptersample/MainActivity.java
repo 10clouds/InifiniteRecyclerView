@@ -3,6 +3,7 @@ package com.tenclouds.loadingadaptersample;
 import android.app.SearchManager;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.view.Menu;
@@ -11,7 +12,7 @@ import android.view.MenuItem;
 
 import com.tenclouds.loadingadapter.views.LoadingRecyclerView;
 
-public class MainActivity extends AppCompatActivity implements SearchView.OnQueryTextListener {
+public class MainActivity extends AppCompatActivity implements SearchView.OnQueryTextListener, MenuItemCompat.OnActionExpandListener {
     private MtgCardsLoadingAdapter adapter;
 
     @Override
@@ -37,6 +38,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         searchView.setSearchableInfo(searchManager.
                 getSearchableInfo(getComponentName()));
         searchView.setOnQueryTextListener(this);
+        MenuItemCompat.setOnActionExpandListener(searchMenuItem, this);
 
         return true;
     }
@@ -50,5 +52,17 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     @Override
     public boolean onQueryTextChange(String newText) {
         return false;
+    }
+
+
+    @Override
+    public boolean onMenuItemActionExpand(MenuItem item) {
+        return true;
+    }
+
+    @Override
+    public boolean onMenuItemActionCollapse(MenuItem item) {
+        adapter.setItemsLoader(new AllCardsLoader());
+        return true;
     }
 }
