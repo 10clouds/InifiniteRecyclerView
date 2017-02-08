@@ -1,4 +1,4 @@
 <resources>
-    <string name="app_name">LoadingAdapterSample</string>
+    <string name="app_name">Magic: The Gathering Cards</string>
     <string name="title_activity_search_result">SearchResultActivity</string>
 </resources>

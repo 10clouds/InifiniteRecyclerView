@@ -1,5 +1,6 @@
 package com.tenclouds.loadingadaptersample;
 
+import com.android.annotations.Nullable;
 import com.tenclouds.loadingadapter.AbstractItemsLoader;
 
 import java.util.ArrayList;
@@ -11,10 +12,10 @@ import io.magicthegathering.javasdk.resource.Card;
 public class SearchCardsLoader implements AbstractItemsLoader<Card> {
     private static final int PAGE_SIZE = 20;
     private int pageNo = 1;
-    private final String cardName;
+    private final String searchQuery;
 
-    public SearchCardsLoader(String cardName) {
-        this.cardName = cardName;
+    public SearchCardsLoader(@Nullable String searchQuery) {
+        this.searchQuery = searchQuery;
     }
 
     @Override
@@ -23,8 +24,8 @@ public class SearchCardsLoader implements AbstractItemsLoader<Card> {
         filter.add("pageSize=" + PAGE_SIZE);
         filter.add("page=" + pageNo);
 
-        if (cardName != null && !cardName.isEmpty()) {
-            filter.add("name=" + cardName);
+        if (searchQuery != null && !searchQuery.isEmpty()) {
+            filter.add("name=" + searchQuery);
         }
 
         List<Card> cardsPage = CardAPI.getAllCards(filter);

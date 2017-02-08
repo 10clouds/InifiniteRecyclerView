@@ -11,7 +11,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.tenclouds.loadingadapter.views.LoadingRecyclerView;
-import com.tenclouds.loadingadaptersample.AllCardsLoader;
 import com.tenclouds.loadingadaptersample.MtgCardsLoadingAdapter;
 import com.tenclouds.loadingadaptersample.R;
 import com.tenclouds.loadingadaptersample.SearchCardsLoader;
@@ -26,7 +25,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         LoadingRecyclerView recyclerView = (LoadingRecyclerView) findViewById(R.id.recycler);
-        adapter = new MtgCardsLoadingAdapter(this, new AllCardsLoader(), this);
+        adapter = new MtgCardsLoadingAdapter(this, new SearchCardsLoader(null), this);
         recyclerView.setAdapter(adapter);
     }
 
@@ -68,7 +67,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
     @Override
     public boolean onMenuItemActionCollapse(MenuItem item) {
-        adapter.setItemsLoader(new AllCardsLoader());
+        adapter.setItemsLoader(new SearchCardsLoader(""));
         return true;
     }
 
