@@ -22,18 +22,18 @@ public class MtgCardsLoadingAdapter extends AbstractLoadingAdapter<Card> {
     }
 
     @Override
-    public long getYourItemId(int position) {
+    protected long getRecyclerItemId(int position) {
         return 0;
     }
 
     @Override
-    public RecyclerView.ViewHolder getYourItemViewHolder(ViewGroup parent, int viewType) {
+    protected RecyclerView.ViewHolder createRecyclerItemViewHolder(ViewGroup parent, int viewType) {
         ViewCardBinding binding = DataBindingUtil.inflate(getInflater(), R.layout.view_card, parent, false);
         return new CardViewHolder(binding);
     }
 
     @Override
-    public void bindYourViewHolder(RecyclerView.ViewHolder holder, int position) {
+    protected void bindRecyclerViewHolder(RecyclerView.ViewHolder holder, int position) {
         final Card item = getItem(position);
         CardViewHolder cardViewHolder = (CardViewHolder) holder;
         cardViewHolder.setCard(item);
@@ -43,7 +43,7 @@ public class MtgCardsLoadingAdapter extends AbstractLoadingAdapter<Card> {
     }
 
     @Override
-    public int getYourItemViewType(int position) {
+    protected int getRecyclerItemViewType(int position) {
         return 0;
     }
 

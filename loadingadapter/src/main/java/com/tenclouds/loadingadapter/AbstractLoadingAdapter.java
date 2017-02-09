@@ -13,6 +13,10 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * RecyclerView adapter for use with {@link com.tenclouds.loadingadapter.LoadingRecyclerView}. It has to be extended to be used in a project.
+ * @param <T> Type of the item that this instance of adapter can hold.
+ */
 public abstract class AbstractLoadingAdapter<T> extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private static final int VIEWTYPE_LOADER = -1;
@@ -25,6 +29,11 @@ public abstract class AbstractLoadingAdapter<T> extends RecyclerView.Adapter<Rec
     private int emptyStateView;
     private boolean autoLoadingEnabled = true;
 
+    /**
+     * @param context Adapter's context
+     * @param emptyStateView Id of a layout to be shown when this adapter doesn't hold any items
+     * @param itemsLoader Implementation of {@link com.tenclouds.loadingadapter.AbstractItemsLoader} used for loading new items into the adapter
+     */
     public AbstractLoadingAdapter(Context context, @LayoutRes int emptyStateView, @NonNull AbstractItemsLoader<T> itemsLoader) {
         this.context = context;
         this.emptyStateView = emptyStateView;
@@ -34,7 +43,11 @@ public abstract class AbstractLoadingAdapter<T> extends RecyclerView.Adapter<Rec
         items = new ArrayList<>();
     }
 
-    public void setItemsLoader(AbstractItemsLoader<T> itemsLoader) {
+    /**
+     * Method for setting new items loader, will remove all the old items from the adapter and start loading the new items.
+     * @param itemsLoader loader used to load new items
+     */
+    public void replaceItemsLoader(AbstractItemsLoader<T> itemsLoader) {
         items.clear();
         this.itemsLoader = itemsLoader;
         notifyDataSetChanged();
@@ -42,7 +55,7 @@ public abstract class AbstractLoadingAdapter<T> extends RecyclerView.Adapter<Rec
     }
 
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
+    final public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         if (viewType == VIEWTYPE_LOADER) {
             View view = inflater.inflate(R.layout.loader_item_layout, viewGroup, false);
             return new LoaderViewHolder(view);
@@ -50,19 +63,19 @@ public abstract class AbstractLoadingAdapter<T> extends RecyclerView.Adapter<Rec
             View view = inflater.inflate(emptyStateView, viewGroup, false);
             return new EmptyStateViewHolder(view);
         } else {
-            return getYourItemViewHolder(viewGroup, viewType);
+            return createRecyclerItemViewHolder(viewGroup, viewType);
         }
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
+    final public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
         if (!(viewHolder instanceof AbstractLoadingAdapter.LoaderViewHolder) && !(viewHolder instanceof AbstractLoadingAdapter.EmptyStateViewHolder)) {
-            bindYourViewHolder(viewHolder, position);
+            bindRecyclerViewHolder(viewHolder, position);
         }
     }
 
     @Override
-    public int getItemCount() {
+    final public int getItemCount() {
         if (items == null || items.size() == 0) {
             return 1;
         }
@@ -75,42 +88,55 @@ public abstract class AbstractLoadingAdapter<T> extends RecyclerView.Adapter<Rec
     }
 
     @Override
-    public long getItemId(int position) {
+    final public long getItemId(int position) {
         // loader can't be at position 0
         // loader can only be at the last position
         if (position != 0 && position == getItemCount() - 1) {
             // id of loader is considered as -1 here
             return 0;
         }
-        return getYourItemId(position);
+        return getRecyclerItemId(position);
     }
 
     @Override
-    public int getItemViewType(int position) {
+    final public int getItemViewType(int position) {
         if (isLoading && (items.isEmpty() || position == getItemCount() - 1)) {
             return VIEWTYPE_LOADER;
         } else if (items.size() == 0) {
             return VIEWTYPE_EMPTY_VIEW;
         } else {
-            return getYourItemViewType(position);
+            return getRecyclerItemViewType(position);
         }
     }
 
-    public void add(List<T> newItems) {
-        if (newItems != null && newItems.size() > 0) {
-            int oldItemsSize = items.size();
-            items.addAll(newItems);
-            notifyItemRangeInserted(oldItemsSize, newItems.size());
-        }
-    }
+    /**
+     * Return the stable ID for the item at position.
+     * @param position Position of the item
+     * @return Id of a view shown in recycler view.
+     */
+    protected abstract long getRecyclerItemId(int position);
 
-    public abstract long getYourItemId(int position);
+    /**
+     * Creates view holder for views shown in recycler view
+     * @param parent The ViewGroup into which the new View will be added after it is bound to an adapter position.
+     * @param viewType The view type of the new View, returned by {@link #getRecyclerItemViewType}
+     * @return Custom recycler view, extending RecyclerView.ViewHolder
+     */
+    protected abstract RecyclerView.ViewHolder createRecyclerItemViewHolder(ViewGroup parent, int viewType);
 
-    public abstract RecyclerView.ViewHolder getYourItemViewHolder(ViewGroup parent, int viewType);
+    /**
+     *
+     * @param holder
+     * @param position
+     */
+    protected abstract void bindRecyclerViewHolder(RecyclerView.ViewHolder holder, int position);
 
-    public abstract void bindYourViewHolder(RecyclerView.ViewHolder holder, int position);
-
-    public abstract int getYourItemViewType(int position);
+    /**
+     * Return item type of recyclerview view. Can be used to return different view types for different types of items.
+     * @param position position to query
+     * @return Item view type, -1 and -2 are reserved for loading view and empty list view
+     */
+    protected abstract int getRecyclerItemViewType(int position);
 
     protected LayoutInflater getInflater() {
         return inflater;
@@ -125,7 +151,7 @@ public abstract class AbstractLoadingAdapter<T> extends RecyclerView.Adapter<Rec
                     ((Activity) context).runOnUiThread(() -> {
                         setLoading(false);
                         if (newItems != null)
-                            add(newItems);
+                            addNewItems(newItems);
                     });
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -142,6 +168,14 @@ public abstract class AbstractLoadingAdapter<T> extends RecyclerView.Adapter<Rec
     @SuppressWarnings("WeakerAccess")
     public T getItem(int position) {
         return items.get(position);
+    }
+
+    private void addNewItems(List<T> newItems) {
+        if (newItems != null && newItems.size() > 0) {
+            int oldItemsSize = items.size();
+            items.addAll(newItems);
+            notifyItemRangeInserted(oldItemsSize, newItems.size());
+        }
     }
 
     private void setLoading(boolean status) {

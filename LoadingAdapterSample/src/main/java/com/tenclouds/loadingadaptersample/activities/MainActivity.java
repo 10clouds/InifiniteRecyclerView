@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
     @Override
     public boolean onQueryTextSubmit(String query) {
-        adapter.setItemsLoader(new SearchCardsLoader(query, this));
+        adapter.replaceItemsLoader(new SearchCardsLoader(query, this));
         return false;
     }
 
@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
     @Override
     public boolean onMenuItemActionCollapse(MenuItem item) {
-        adapter.setItemsLoader(new SearchCardsLoader("", this));
+        adapter.replaceItemsLoader(new SearchCardsLoader("", this));
         return true;
     }
 

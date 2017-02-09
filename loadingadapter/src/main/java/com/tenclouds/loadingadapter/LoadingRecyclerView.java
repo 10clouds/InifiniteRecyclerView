@@ -6,6 +6,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 
+/**
+ * Recycler view to be used with {@link com.tenclouds.loadingadapter.AbstractLoadingAdapter}, automatically loads new items when user scrolls to the end of the list
+ */
 public class LoadingRecyclerView extends RecyclerView {
     public LoadingRecyclerView(Context context) {
         super(context);
