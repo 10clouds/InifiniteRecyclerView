@@ -8,6 +8,6 @@ import com.bumptech.glide.Glide;
 public class ImageViewBindingAdapter {
     @BindingAdapter("imageSrc")
     public static void setImageSource(ImageView imageView, String imageSrc){
-        Glide.with(imageView.getContext()).load(imageSrc).into(imageView);
+        Glide.with(imageView.getContext()).load(imageSrc).placeholder(R.drawable.mtg_card_back).crossFade().into(imageView);
     }
 }

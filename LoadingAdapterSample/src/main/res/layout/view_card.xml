@@ -1,21 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
+
     <data>
+
         <variable
             name="card"
-            type="io.magicthegathering.javasdk.resource.Card"/>
+            type="io.magicthegathering.javasdk.resource.Card" />
     </data>
-    <LinearLayout
-        android:orientation="vertical" android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="5dp">
+
+        <ImageView
+            android:id="@+id/card_image"
+            android:layout_width="0dp"
+            android:layout_height="80dp"
+            app:imageSrc="@{card.imageUrl}"
+            app:layout_constraintDimensionRatio="2.5:3.5"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@drawable/mtg_card_back" />
 
         <TextView
-            android:text="@{card.name}"
-            tools:text="Card name"
-            android:padding="10dp"
-            android:layout_width="match_parent"
+            android:id="@+id/card_name"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/textView" />
-    </LinearLayout>
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
+            android:text="@{card.name}"
+            app:layout_constraintLeft_toRightOf="@+id/card_image"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Card name" />
+
+        <TextView
+            android:id="@+id/set"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="Set: "
+            app:layout_constraintLeft_toLeftOf="@+id/card_name"
+            app:layout_constraintTop_toBottomOf="@+id/card_name" />
+
+        <TextView
+            android:id="@+id/set_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{card.setName}"
+            app:layout_constraintLeft_toRightOf="@+id/set"
+            app:layout_constraintTop_toBottomOf="@+id/card_name"
+            tools:text="set name" />
+    </android.support.constraint.ConstraintLayout>
 </layout>
