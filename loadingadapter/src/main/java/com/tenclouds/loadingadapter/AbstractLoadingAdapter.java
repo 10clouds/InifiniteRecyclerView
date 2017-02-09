@@ -96,52 +96,12 @@ public abstract class AbstractLoadingAdapter<T> extends RecyclerView.Adapter<Rec
         }
     }
 
-    void loadNewItems() {
-        if (autoLoadingEnabled) {
-            setLoading(true);
-            AsyncTask.execute(() -> {
-                try {
-                    final List<T> newItems = itemsLoader.getNewItems();
-                    ((Activity) context).runOnUiThread(() -> {
-                        setLoading(false);
-                        if(newItems != null)
-                            add(newItems);
-                    });
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    ((Activity) context).runOnUiThread(() -> {
-                        setLoading(false);
-                    });
-                }
-            });
-        }
-    }
-
     public void add(List<T> newItems) {
         if (newItems != null && newItems.size() > 0) {
             int oldItemsSize = items.size();
             items.addAll(newItems);
             notifyItemRangeInserted(oldItemsSize, newItems.size());
         }
-    }
-
-    public void setLoading(boolean status) {
-        if (status != this.isLoading) {
-            isLoading = status;
-            notifyItemChanged(items.size());
-        }
-    }
-
-    public boolean isLoading() {
-        return isLoading;
-    }
-
-    public T getItem(int position) {
-        return items.get(position);
-    }
-
-    protected LayoutInflater getInflater() {
-        return inflater;
     }
 
     public abstract long getYourItemId(int position);
@@ -152,18 +112,55 @@ public abstract class AbstractLoadingAdapter<T> extends RecyclerView.Adapter<Rec
 
     public abstract int getYourItemViewType(int position);
 
+    protected LayoutInflater getInflater() {
+        return inflater;
+    }
+
+    void loadNewItems() {
+        if (autoLoadingEnabled) {
+            setLoading(true);
+            AsyncTask.execute(() -> {
+                try {
+                    final List<T> newItems = itemsLoader.getNewItems();
+                    ((Activity) context).runOnUiThread(() -> {
+                        setLoading(false);
+                        if (newItems != null)
+                            add(newItems);
+                    });
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    ((Activity) context).runOnUiThread(() -> setLoading(false));
+                }
+            });
+        }
+    }
+
+    boolean isLoading() {
+        return isLoading;
+    }
+
+    @SuppressWarnings("WeakerAccess")
+    public T getItem(int position) {
+        return items.get(position);
+    }
+
+    private void setLoading(boolean status) {
+        if (status != this.isLoading) {
+            isLoading = status;
+            notifyItemChanged(items.size());
+        }
+    }
+
     private class LoaderViewHolder extends RecyclerView.ViewHolder {
-        public LoaderViewHolder(View view) {
+        LoaderViewHolder(View view) {
             super(view);
         }
     }
 
     private class EmptyStateViewHolder extends RecyclerView.ViewHolder {
-
-        public EmptyStateViewHolder(View view) {
+        EmptyStateViewHolder(View view) {
             super(view);
         }
-
     }
 }
 
