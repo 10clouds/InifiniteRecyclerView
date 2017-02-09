@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.tenclouds.loadingadapter.AbstractItemsLoader;
-import com.tenclouds.loadingadapter.views.AbstractLoadingAdapter;
+import com.tenclouds.loadingadapter.AbstractLoadingAdapter;
 import com.tenclouds.loadingadaptersample.databinding.ViewCardBinding;
 
 import io.magicthegathering.javasdk.resource.Card;

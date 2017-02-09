@@ -11,7 +11,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import com.tenclouds.loadingadapter.views.LoadingRecyclerView;
+import com.tenclouds.loadingadapter.LoadingRecyclerView;
 import com.tenclouds.loadingadaptersample.MtgCardsLoadingAdapter;
 import com.tenclouds.loadingadaptersample.R;
 import com.tenclouds.loadingadaptersample.SearchCardsLoader;

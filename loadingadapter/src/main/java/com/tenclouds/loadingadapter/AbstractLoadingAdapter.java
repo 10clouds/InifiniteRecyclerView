@@ -1,4 +1,4 @@
-package com.tenclouds.loadingadapter.views;
+package com.tenclouds.loadingadapter;
 
 import android.app.Activity;
 import android.content.Context;
@@ -9,9 +9,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import com.tenclouds.loadingadapter.AbstractItemsLoader;
-import com.tenclouds.loadingadapter.R;
 
 import java.util.ArrayList;
 import java.util.List;

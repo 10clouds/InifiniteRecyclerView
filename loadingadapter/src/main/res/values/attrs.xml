@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <declare-styleable name="EmptyStateView">
-        <attr name="emptyStateText" format="string"/>
-        <attr name="emptyStateIcon" format="reference"/>
-    </declare-styleable>
-</resources>

@@ -1,4 +1,4 @@
-package com.tenclouds.loadingadapter.views;
+package com.tenclouds.loadingadapter;
 
 import android.content.Context;
 import android.support.annotation.Nullable;
