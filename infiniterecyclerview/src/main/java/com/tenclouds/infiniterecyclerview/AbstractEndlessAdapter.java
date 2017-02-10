@@ -24,7 +24,7 @@ public abstract class AbstractEndlessAdapter<T> extends RecyclerView.Adapter<Rec
     private boolean isLoading;
     private ArrayList<T> items;
     private LayoutInflater inflater;
-    private AbstractItemsLoader<T> itemsLoader;
+    private ItemsLoader<T> itemsLoader;
     private Context context;
     private int emptyStateView;
     private boolean autoLoadingEnabled = true;
@@ -32,9 +32,9 @@ public abstract class AbstractEndlessAdapter<T> extends RecyclerView.Adapter<Rec
     /**
      * @param context Adapter's context
      * @param emptyStateView Id of a layout to be shown when this adapter doesn't hold any items
-     * @param itemsLoader Implementation of {@link com.tenclouds.infiniterecyclerview.AbstractItemsLoader} used for loading new items into the adapter
+     * @param itemsLoader Implementation of {@link ItemsLoader} used for loading new items into the adapter
      */
-    public AbstractEndlessAdapter(Context context, @LayoutRes int emptyStateView, @NonNull AbstractItemsLoader<T> itemsLoader) {
+    public AbstractEndlessAdapter(Context context, @LayoutRes int emptyStateView, @NonNull ItemsLoader<T> itemsLoader) {
         this.context = context;
         this.emptyStateView = emptyStateView;
         this.itemsLoader = itemsLoader;
@@ -47,7 +47,7 @@ public abstract class AbstractEndlessAdapter<T> extends RecyclerView.Adapter<Rec
      * Method for setting new items loader, will remove all the old items from the adapter and start loading the new items.
      * @param itemsLoader loader used to load new items
      */
-    public void replaceItemsLoader(AbstractItemsLoader<T> itemsLoader) {
+    public void replaceItemsLoader(ItemsLoader<T> itemsLoader) {
         items.clear();
         this.itemsLoader = itemsLoader;
         notifyDataSetChanged();

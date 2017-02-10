@@ -1,7 +1,7 @@
 package com.tenclouds.loadingadaptersample;
 
 import com.android.annotations.Nullable;
-import com.tenclouds.infiniterecyclerview.AbstractItemsLoader;
+import com.tenclouds.infiniterecyclerview.ItemsLoader;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,7 +9,7 @@ import java.util.List;
 import io.magicthegathering.javasdk.api.CardAPI;
 import io.magicthegathering.javasdk.resource.Card;
 
-public class SearchCardsLoader implements AbstractItemsLoader<Card> {
+public class SearchCardsLoader implements ItemsLoader<Card> {
     private static final int PAGE_SIZE = 20;
     private int pageNo = 1;
     private final String searchQuery;
