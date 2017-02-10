@@ -110,4 +110,4 @@ public class MtgCardsEndlessAdapter extends AbstractEndlessAdapter<Card> {
 You can use multiple view types if you want to, just like in "normal" adapter.
 
 # EndlessRecyclerView
-This class simply needs to be used instead of normal recycler view, to send callbacks to the adapter when the view is scrolled to the bottom.
+This class simply needs to be used instead of normal recycler view, to send callbacks to the adapter when the view is scrolled to the bottom. It supports all of the parameters availible for RecyclerView.
