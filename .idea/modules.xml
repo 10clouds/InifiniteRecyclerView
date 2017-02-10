@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/InfiniteRecyclerViewSample/InfiniteRecyclerViewSample.iml" filepath="$PROJECT_DIR$/InfiniteRecyclerViewSample/InfiniteRecyclerViewSample.iml" />
       <module fileurl="file://$PROJECT_DIR$/LoadingAdapter.iml" filepath="$PROJECT_DIR$/LoadingAdapter.iml" />
-      <module fileurl="file://$PROJECT_DIR$/LoadingAdapterSample/LoadingAdapterSample.iml" filepath="$PROJECT_DIR$/LoadingAdapterSample/LoadingAdapterSample.iml" />
-      <module fileurl="file://$PROJECT_DIR$/loadingadapter/loadingadapter.iml" filepath="$PROJECT_DIR$/loadingadapter/loadingadapter.iml" />
+      <module fileurl="file://$PROJECT_DIR$/infiniterecyclerview/infiniterecyclerview.iml" filepath="$PROJECT_DIR$/infiniterecyclerview/infiniterecyclerview.iml" />
     </modules>
   </component>
 </project>

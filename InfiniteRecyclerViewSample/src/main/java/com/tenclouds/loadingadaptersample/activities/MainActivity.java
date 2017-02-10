@@ -11,22 +11,22 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import com.tenclouds.loadingadapter.LoadingRecyclerView;
-import com.tenclouds.loadingadaptersample.MtgCardsLoadingAdapter;
+import com.tenclouds.infiniterecyclerview.EndlessRecyclerView;
+import com.tenclouds.loadingadaptersample.MtgCardsEndlessAdapter;
 import com.tenclouds.loadingadaptersample.R;
 import com.tenclouds.loadingadaptersample.SearchCardsLoader;
 
 import io.magicthegathering.javasdk.resource.Card;
 
-public class MainActivity extends AppCompatActivity implements SearchView.OnQueryTextListener, MenuItemCompat.OnActionExpandListener, MtgCardsLoadingAdapter.ItemSelectedListener, SearchCardsLoader.ShowErrorInterface {
-    private MtgCardsLoadingAdapter adapter;
+public class MainActivity extends AppCompatActivity implements SearchView.OnQueryTextListener, MenuItemCompat.OnActionExpandListener, MtgCardsEndlessAdapter.ItemSelectedListener, SearchCardsLoader.ShowErrorInterface {
+    private MtgCardsEndlessAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        LoadingRecyclerView recyclerView = (LoadingRecyclerView) findViewById(R.id.recycler);
-        adapter = new MtgCardsLoadingAdapter(this, new SearchCardsLoader(null, this), this);
+        EndlessRecyclerView recyclerView = (EndlessRecyclerView) findViewById(R.id.recycler);
+        adapter = new MtgCardsEndlessAdapter(this, new SearchCardsLoader(null, this), this);
         recyclerView.setAdapter(adapter);
     }
 

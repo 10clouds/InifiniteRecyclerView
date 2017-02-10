@@ -1,1 +1,1 @@
-include ':LoadingAdapterSample', ':loadingadapter'
+include ':InfiniteRecyclerViewSample', ':infiniterecyclerview'

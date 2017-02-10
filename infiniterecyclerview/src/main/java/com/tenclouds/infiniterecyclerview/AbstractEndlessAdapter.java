@@ -1,4 +1,4 @@
-package com.tenclouds.loadingadapter;
+package com.tenclouds.infiniterecyclerview;
 
 import android.app.Activity;
 import android.content.Context;
@@ -14,10 +14,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * RecyclerView adapter for use with {@link com.tenclouds.loadingadapter.LoadingRecyclerView}. It has to be extended to be used in a project.
+ * RecyclerView adapter for use with {@link com.tenclouds.infiniterecyclerview.EndlessRecyclerView}. It has to be extended to be used in a project.
  * @param <T> Type of the item that this instance of adapter can hold.
  */
-public abstract class AbstractLoadingAdapter<T> extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public abstract class AbstractEndlessAdapter<T> extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private static final int VIEWTYPE_LOADER = -1;
     private static final int VIEWTYPE_EMPTY_VIEW = -2;
@@ -32,9 +32,9 @@ public abstract class AbstractLoadingAdapter<T> extends RecyclerView.Adapter<Rec
     /**
      * @param context Adapter's context
      * @param emptyStateView Id of a layout to be shown when this adapter doesn't hold any items
-     * @param itemsLoader Implementation of {@link com.tenclouds.loadingadapter.AbstractItemsLoader} used for loading new items into the adapter
+     * @param itemsLoader Implementation of {@link com.tenclouds.infiniterecyclerview.AbstractItemsLoader} used for loading new items into the adapter
      */
-    public AbstractLoadingAdapter(Context context, @LayoutRes int emptyStateView, @NonNull AbstractItemsLoader<T> itemsLoader) {
+    public AbstractEndlessAdapter(Context context, @LayoutRes int emptyStateView, @NonNull AbstractItemsLoader<T> itemsLoader) {
         this.context = context;
         this.emptyStateView = emptyStateView;
         this.itemsLoader = itemsLoader;
@@ -69,7 +69,7 @@ public abstract class AbstractLoadingAdapter<T> extends RecyclerView.Adapter<Rec
 
     @Override
     final public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
-        if (!(viewHolder instanceof AbstractLoadingAdapter.LoaderViewHolder) && !(viewHolder instanceof AbstractLoadingAdapter.EmptyStateViewHolder)) {
+        if (!(viewHolder instanceof AbstractEndlessAdapter.LoaderViewHolder) && !(viewHolder instanceof AbstractEndlessAdapter.EmptyStateViewHolder)) {
             bindRecyclerViewHolder(viewHolder, position);
         }
     }

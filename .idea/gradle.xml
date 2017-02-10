@@ -8,8 +8,8 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/LoadingAdapterSample" />
-            <option value="$PROJECT_DIR$/loadingadapter" />
+            <option value="$PROJECT_DIR$/InfiniteRecyclerViewSample" />
+            <option value="$PROJECT_DIR$/infiniterecyclerview" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

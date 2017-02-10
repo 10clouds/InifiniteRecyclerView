@@ -1,7 +1,7 @@
 package com.tenclouds.loadingadaptersample;
 
 import com.android.annotations.Nullable;
-import com.tenclouds.loadingadapter.AbstractItemsLoader;
+import com.tenclouds.infiniterecyclerview.AbstractItemsLoader;
 
 import java.util.ArrayList;
 import java.util.List;
