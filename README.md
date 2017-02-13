@@ -19,7 +19,7 @@ AbstractInfiniteAdapter has to be extended, much like "normal" recyclerview adap
 # InfiniteRecyclerView
 This class simply needs to be used instead of normal recycler view, to send callbacks to the adapter when the view is scrolled to the bottom. It supports all of the parameters available for RecyclerView.
 
-# Licence
+# License
 ```
 Copyright 2017 Jakub Komorowski
 
