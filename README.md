@@ -1,10 +1,14 @@
 # InifiniteRecyclerView
-This is a tiny library for implementing endless loading list easily in Android applications, similar to those seen in Facebook or Twitter apps. It consists of LoadingRecyclerView and AbstractLoadingAdapter that has to be extended by user for usage in their project.
+This is a tiny library for implementing endless loading list easily in Android applications, similar to those seen in Facebook or Twitter apps. It consists of InfiniteRecyclerView and AbstractInfiniteAdapter that has to be extended by user for usage in their project.
 
 ![Demo](http://i.giphy.com/l3q2WWM6bhe7kwbmw.gif)
 
 # Usage
-To use this library, you will need to implement AbstractEndlessAdapter, ItemsLoader interface, and use them with EndlessRecyclerView.
+To include this library in your project, simply add the following line to your module gradle file:
+```
+compile 'com.tenclouds:infinite-recyclerview:0.0.2'
+```
+You will need to implement AbstractInfiniteAdapter, ItemsLoader interface, and use them with InfiniteRecyclerView.
 
 # ItemsLoader implementation
 
@@ -49,12 +53,12 @@ public class SearchCardsLoader implements ItemsLoader<Card> {
 }
 ```
 
-# AbstractEndlessAdapter
+# AbstractInfiniteAdapter
 
-The implementation of AbstractEndlessAdapter might look something like this:
+The implementation of InfiniteRecyclerView might look something like this:
 
 ```java
-public class MtgCardsEndlessAdapter extends AbstractEndlessAdapter<Card> {
+public class MtgCardsEndlessAdapter extends AbstractInfiniteAdapter<Card> {
     private ItemSelectedListener itemSelectedListener;
 
     public MtgCardsEndlessAdapter(Context context, AbstractItemsLoader<Card> itemsLoader, ItemSelectedListener itemSelectedListener) {
@@ -109,5 +113,5 @@ public class MtgCardsEndlessAdapter extends AbstractEndlessAdapter<Card> {
 
 You can use multiple view types if you want to, just like in "normal" adapter.
 
-# EndlessRecyclerView
-This class simply needs to be used instead of normal recycler view, to send callbacks to the adapter when the view is scrolled to the bottom. It supports all of the parameters availible for RecyclerView.
+# InfiniteRecyclerView
+This class simply needs to be used instead of normal recycler view, to send callbacks to the adapter when the view is scrolled to the bottom. It supports all of the parameters available for RecyclerView.
