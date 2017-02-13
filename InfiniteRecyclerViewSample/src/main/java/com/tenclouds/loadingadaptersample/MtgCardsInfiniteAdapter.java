@@ -7,16 +7,16 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.tenclouds.infiniterecyclerview.ItemsLoader;
-import com.tenclouds.infiniterecyclerview.AbstractEndlessAdapter;
+import com.tenclouds.infiniterecyclerview.AbstractInfiniteAdapter;
 import com.tenclouds.loadingadaptersample.databinding.ViewCardBinding;
 
 import io.magicthegathering.javasdk.resource.Card;
 
 
-public class MtgCardsEndlessAdapter extends AbstractEndlessAdapter<Card> {
+public class MtgCardsInfiniteAdapter extends AbstractInfiniteAdapter<Card> {
     private ItemSelectedListener itemSelectedListener;
 
-    public MtgCardsEndlessAdapter(Context context, ItemsLoader<Card> itemsLoader, ItemSelectedListener itemSelectedListener) {
+    public MtgCardsInfiniteAdapter(Context context, ItemsLoader<Card> itemsLoader, ItemSelectedListener itemSelectedListener) {
         super(context, R.layout.view_empty, itemsLoader);
         this.itemSelectedListener = itemSelectedListener;
     }

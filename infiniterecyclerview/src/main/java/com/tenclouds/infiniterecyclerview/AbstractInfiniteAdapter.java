@@ -14,10 +14,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * RecyclerView adapter for use with {@link com.tenclouds.infiniterecyclerview.EndlessRecyclerView}. It has to be extended to be used in a project.
+ * RecyclerView adapter for use with {@link com.tenclouds.infiniterecyclerview.InfiniteRecyclerView}. It has to be extended to be used in a project.
  * @param <T> Type of the item that this instance of adapter can hold.
  */
-public abstract class AbstractEndlessAdapter<T> extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public abstract class AbstractInfiniteAdapter<T> extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private static final int VIEWTYPE_LOADER = -1;
     private static final int VIEWTYPE_EMPTY_VIEW = -2;
@@ -34,7 +34,7 @@ public abstract class AbstractEndlessAdapter<T> extends RecyclerView.Adapter<Rec
      * @param emptyStateView Id of a layout to be shown when this adapter doesn't hold any items
      * @param itemsLoader Implementation of {@link ItemsLoader} used for loading new items into the adapter
      */
-    public AbstractEndlessAdapter(Context context, @LayoutRes int emptyStateView, @NonNull ItemsLoader<T> itemsLoader) {
+    public AbstractInfiniteAdapter(Context context, @LayoutRes int emptyStateView, @NonNull ItemsLoader<T> itemsLoader) {
         this.context = context;
         this.emptyStateView = emptyStateView;
         this.itemsLoader = itemsLoader;
@@ -69,7 +69,7 @@ public abstract class AbstractEndlessAdapter<T> extends RecyclerView.Adapter<Rec
 
     @Override
     final public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
-        if (!(viewHolder instanceof AbstractEndlessAdapter.LoaderViewHolder) && !(viewHolder instanceof AbstractEndlessAdapter.EmptyStateViewHolder)) {
+        if (!(viewHolder instanceof AbstractInfiniteAdapter.LoaderViewHolder) && !(viewHolder instanceof AbstractInfiniteAdapter.EmptyStateViewHolder)) {
             bindRecyclerViewHolder(viewHolder, position);
         }
     }

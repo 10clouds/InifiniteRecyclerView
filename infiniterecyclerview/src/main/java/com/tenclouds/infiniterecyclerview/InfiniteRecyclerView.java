@@ -7,39 +7,39 @@ import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 
 /**
- * Recycler view to be used with {@link AbstractEndlessAdapter}, automatically loads new items when user scrolls to the end of the list
+ * Recycler view to be used with {@link AbstractInfiniteAdapter}, automatically loads new items when user scrolls to the end of the list
  */
-public class EndlessRecyclerView extends RecyclerView {
-    public EndlessRecyclerView(Context context) {
+public class InfiniteRecyclerView extends RecyclerView {
+    public InfiniteRecyclerView(Context context) {
         super(context);
     }
 
-    public EndlessRecyclerView(Context context, @Nullable AttributeSet attrs) {
+    public InfiniteRecyclerView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public EndlessRecyclerView(Context context, @Nullable AttributeSet attrs, int defStyle) {
+    public InfiniteRecyclerView(Context context, @Nullable AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
     }
 
     @Override
     public void setAdapter(Adapter adapter) {
-        if(adapter instanceof AbstractEndlessAdapter) {
+        if(adapter instanceof AbstractInfiniteAdapter) {
             super.setAdapter(adapter);
-            setScrollListener((AbstractEndlessAdapter) adapter);
+            setScrollListener((AbstractInfiniteAdapter) adapter);
         } else {
             throw new IllegalStateException("Adapter ");
         }
     }
 
-    private void setScrollListener(final AbstractEndlessAdapter adapter) {
+    private void setScrollListener(final AbstractInfiniteAdapter adapter) {
         if(getLayoutManager() instanceof LinearLayoutManager) {
             addOnScrollListener(new OnScrollListener() {
                 @Override
                 public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                     LinearLayoutManager linearLayoutManager = (LinearLayoutManager) getLayoutManager();
                     int firstVisibleItem = linearLayoutManager.findFirstVisibleItemPosition();
-                    int visibleItemCount = EndlessRecyclerView.this.getChildCount();
+                    int visibleItemCount = InfiniteRecyclerView.this.getChildCount();
                     int totalItemCount = linearLayoutManager.getItemCount();
                     boolean loading = adapter.isLoading();
 
