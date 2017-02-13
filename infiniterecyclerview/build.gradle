@@ -4,7 +4,7 @@ apply plugin: 'me.tatarka.retrolambda'
 ext {
     PUBLISH_GROUP_ID = 'com.tenclouds'
     PUBLISH_ARTIFACT_ID = 'infinite-recyclerview'
-    PUBLISH_VERSION = '0.0.2'
+    PUBLISH_VERSION = '0.0.1'
 }
 
 android {
@@ -19,7 +19,7 @@ android {
         minSdkVersion 14
         targetSdkVersion 25
         versionCode 1
-        versionName "0.0.2"
+        versionName "0.0.1"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
