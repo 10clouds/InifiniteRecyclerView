@@ -11,7 +11,7 @@ compile 'com.tenclouds:infinite-recyclerview:0.0.2'
 You will need to implement AbstractInfiniteAdapter, ItemsLoader interface, and use them with InfiniteRecyclerView.
 
 # ItemsLoader interface
-ItemsLoader interface consists of one method - getNewItems(). This method provides new items to add to the list whenever the user scrolls to the bottom of the recyclerview.
+ItemsLoader interface consists of one method - getNewItems(). This method is always called in barckground thread and provides new items to add to the list whenever the user scrolls to the bottom of the recyclerview.
 
 # AbstractInfiniteAdapter
 AbstractInfiniteAdapter has to be extended, much like "normal" recyclerview adapter, and provided with your implementation of ItemsLoader. You can use multiple view types if you want to, just like in "normal" adapter.
