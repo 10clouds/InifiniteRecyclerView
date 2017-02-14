@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<TextView android:layout_width="match_parent"
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/empty_view"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:text="Nothing to show here"
     android:gravity="center"
     android:padding="10dp"
-    xmlns:android="http://schemas.android.com/apk/res/android" />
+    android:text="@string/nothing_to_show_here" />

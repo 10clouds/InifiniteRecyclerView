@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Magic: The Gathering Cards</string>
     <string name="title_activity_search_result">SearchResultActivity</string>
+    <string name="nothing_to_show_here">Nothing to show here</string>
 </resources>
